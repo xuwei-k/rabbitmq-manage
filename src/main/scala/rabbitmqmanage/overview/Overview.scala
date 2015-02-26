@@ -53,7 +53,7 @@ final case class Overview(
   queueTotals       :QueueTotals,
   rabbitmqVersion   :String,
   statisticsDbNode  :String,
-  statisticsLevel   :String
+  statisticsLevel   :Option[String]
 ) extends JsonToString[Overview]
 
 object Overview {
@@ -73,7 +73,7 @@ object Overview {
     (__ \ "queue_totals").format[QueueTotals] and
     (__ \ "rabbitmq_version").format[String] and
     (__ \ "statistics_db_node").format[String] and
-    (__ \ "statistics_level").format[String]
+    (__ \ "statistics_level").formatNullable[String]
   )(apply _, Function.unlift(unapply))
 }
 

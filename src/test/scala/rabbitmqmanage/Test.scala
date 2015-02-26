@@ -28,7 +28,11 @@ object Test {
     apis.foreach { api =>
       val request = httpz.Request(url = s"http://localhost:15672/api/$api").auth("guest", "guest")
       val json = httpz.Core.string(request).map(play.api.libs.json.Json.parse).map { j =>
+        println("-" * 100)
+        println(api)
+        println("-" * 100)
         println(Json.prettyPrint(j))
+        println("-" * 100)
       }
       println(json.interpret)
     }

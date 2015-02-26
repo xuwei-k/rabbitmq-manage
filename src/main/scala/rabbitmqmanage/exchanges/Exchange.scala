@@ -2,7 +2,7 @@ package rabbitmqmanage
 package exchanges
 
 import play.api.libs.functional.syntax._
-import play.api.libs.json.{JsObject, OFormat, __}
+import play.api.libs.json.JsObject
 import rabbitmqmanage.exchanges.Exchange.Arguments
 
 final case class Exchange(

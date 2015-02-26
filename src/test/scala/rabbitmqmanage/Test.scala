@@ -3,6 +3,7 @@ package rabbitmqmanage
 import httpz._, native._
 import play.api.libs.json.{Reads, JsValue, Json}
 import rabbitmqmanage.exchanges.Exchange
+import rabbitmqmanage.users.User
 
 object Test {
   def main(args: Array[String]): Unit = {
@@ -22,7 +23,6 @@ object Test {
       "queues" ::
       "bindings" ::
       "vhosts" ::
-      "users" ::
       "whoami" ::
       "permissions" ::
       "parameters" ::
@@ -47,7 +47,8 @@ object Test {
     def Reads[A](implicit A: Reads[A]) = A
     val list = List[(String, Reads[_])](
       ("overview", Reads[Overview]),
-      ("exchanges", Reads[List[Exchange]])
+      ("exchanges", Reads[List[Exchange]]),
+      ("users", Reads[List[User]])
     )
 
     list.foreach { case (api, reads) =>

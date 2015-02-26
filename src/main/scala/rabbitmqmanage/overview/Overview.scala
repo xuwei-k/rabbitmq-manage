@@ -1,7 +1,7 @@
 package rabbitmqmanage
 
 import play.api.libs.functional.syntax._
-import play.api.libs.json.{JsObject, OFormat, __}
+import play.api.libs.json.JsObject
 import rabbitmqmanage.Overview.MessageStats
 
 final case class Listener(

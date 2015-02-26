@@ -1,13 +1,15 @@
 package rabbitmqmanage
 
-import httpz._, native._
-import play.api.libs.json.{Reads, JsValue, Json}
+import httpz._
+import httpz.native._
+import play.api.libs.json.{Json, Reads}
 import rabbitmqmanage.exchanges.Exchange
+import rabbitmqmanage.nodes.Node
 import rabbitmqmanage.users.User
 
 object Test {
   def main(args: Array[String]): Unit = {
-    test2()
+    test2(if(args.nonEmpty) Some(args.toSet) else None)
   }
 
   def test1() = {
@@ -43,15 +45,16 @@ object Test {
     }
   }
 
-  def test2() = {
+  def test2(testNames: Option[Set[String]]) = {
     def Reads[A](implicit A: Reads[A]) = A
     val list = List[(String, Reads[_])](
       ("overview", Reads[Overview]),
       ("exchanges", Reads[List[Exchange]]),
+      ("nodes", Reads[List[Node]]),
       ("users", Reads[List[User]])
     )
 
-    list.foreach { case (api, reads) =>
+    testNames.fold(list)(names => list.filter{case (name, _ ) => names(name)}).foreach { case (api, reads) =>
       val request = httpz.Request(url = s"http://localhost:15672/api/$api").auth("guest", "guest")
       httpz.Core.string(request).map(play.api.libs.json.Json.parse).map { json =>
         println("-" * 100)
@@ -60,7 +63,9 @@ object Test {
         println(Json.prettyPrint(json))
         val obj = json.validate(reads)
         println(obj.isSuccess)
-        obj.recoverTotal(println)
+        obj.recoverTotal(
+          _.errors.foreach(println)
+        )
       }.interpret
     }
   }

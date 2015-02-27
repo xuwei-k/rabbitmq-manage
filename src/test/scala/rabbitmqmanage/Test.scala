@@ -13,6 +13,9 @@ object Test {
     test2(if(args.nonEmpty) Some(args.toSet) else None)
   }
 
+  def createRequest(apiName: String) =
+    httpz.Request(url = s"http://localhost:15672/api/$apiName").auth("guest", "guest")
+
   def test1() = {
     val apis = (
       "cluster-name" ::
@@ -30,7 +33,7 @@ object Test {
     )
 
     apis.foreach { api =>
-      val request = httpz.Request(url = s"http://localhost:15672/api/$api").auth("guest", "guest")
+      val request = createRequest(api)
       val json = httpz.Core.string(request).map(play.api.libs.json.Json.parse).map { j =>
         println("-" * 100)
         println(api)
@@ -53,7 +56,7 @@ object Test {
     )
 
     testNames.fold(list)(names => list.filter{case (name, _ ) => names(name)}).foreach { case (api, reads) =>
-      val request = httpz.Request(url = s"http://localhost:15672/api/$api").auth("guest", "guest")
+      val request = createRequest(api)
       httpz.Core.string(request).map(play.api.libs.json.Json.parse).map { json =>
         println("-" * 100)
         println(api)

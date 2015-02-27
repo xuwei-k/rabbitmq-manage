@@ -17,6 +17,7 @@ libraryDependencies ++= (
   ("com.typesafe.play" %% "play-json" % "2.3.8") ::
   ("com.github.xuwei-k" %% "httpz-native" % "0.2.17" % "test") ::
   ("com.chuusai" %% "shapeless" % "2.1.0") ::
+  ("com.github.xuwei-k" %% "play-json-extra" % "0.2.3") ::
   Nil
 )
 

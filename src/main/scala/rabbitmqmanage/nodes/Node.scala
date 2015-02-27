@@ -1,11 +1,12 @@
 package rabbitmqmanage
 package nodes
 
+import play.jsonext._
 import play.api.libs.json.JsValue
 
 final case class Node(
 //  configFiles        :List[String],
-  dbDir              :String,
+//  dbDir              :String,
   diskFree           :Long,
   diskFreeAlarm      :Boolean,
 //  diskFreeDetails    :Map[String, JsValue],
@@ -20,7 +21,7 @@ final case class Node(
   memUsed            :Long,
 //  memUsedDetails     :Map[String, JsValue],
   name               :String,
-  netTicktime        :Long,
+//  netTicktime        :Long,
   osPid              :String,
   partitions         :List[JsValue],
   procTotal          :Long,
@@ -40,14 +41,14 @@ final case class Node(
 
 object Node {
 
-  implicit val format: OFormat[Node] = PlayJson(
+  implicit val format: OFormat[Node] = CaseClassFormats(apply _, unapply _)(
 //     "config_files",
-     "db_dir",
+//     "db_dir",
      "disk_free",
      "disk_free_alarm",
 //     "disk_free_details",
      "disk_free_limit",
-     "enabled_plugins",
+//     "enabled_plugins",
      "fd_total",
      "fd_used",
 //     "fd_used_details",
@@ -73,7 +74,7 @@ object Node {
 //     "sockets_used_details",
      "type",
      "uptime"
-  ).format(shapeless.Generic[Node])
+  )
 
 }
 

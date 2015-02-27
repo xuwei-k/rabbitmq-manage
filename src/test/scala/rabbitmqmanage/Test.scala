@@ -14,14 +14,11 @@ object Test {
 
   def test1() = {
     val apis = (
-      "overview" ::
       "cluster-name" ::
-      "nodes" ::
       "extensions" ::
       "definitions" ::
       "connections" ::
       "channels" ::
-      "exchanges" ::
       "queues" ::
       "bindings" ::
       "vhosts" ::

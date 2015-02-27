@@ -66,7 +66,7 @@ object Test {
         obj.recoverTotal(
           _.errors.foreach(println)
         )
-      }.interpret
+      }.interpret.leftMap(_.printStackTrace)
     }
   }
 }

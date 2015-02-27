@@ -3,6 +3,7 @@ package rabbitmqmanage
 import httpz._
 import httpz.native._
 import play.api.libs.json.{Json, Reads}
+import rabbitmqmanage.channels.Channel
 import rabbitmqmanage.definitions.Definitions
 import rabbitmqmanage.exchanges.Exchange
 import rabbitmqmanage.nodes.Node
@@ -21,7 +22,6 @@ object Test {
       "cluster-name" ::
       "extensions" ::
       "connections" ::
-      "channels" ::
       "queues" ::
       "bindings" ::
       "vhosts" ::
@@ -50,6 +50,7 @@ object Test {
     val list = List[(String, Reads[_])](
       ("overview", Reads[Overview]),
       ("exchanges", Reads[List[Exchange]]),
+      ("channels", Reads[List[Channel]]),
       ("nodes", Reads[List[Node]]),
       ("definitions", Reads[Definitions]),
       ("users", Reads[List[User]])

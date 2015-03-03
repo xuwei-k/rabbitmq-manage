@@ -4,7 +4,7 @@ licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-lic
 
 resolvers += "typesafe" at "http://typesafe.artifactoryonline.com/typesafe/releases/"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.11.6"
 
 ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 
